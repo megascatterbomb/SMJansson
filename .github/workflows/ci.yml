@@ -63,8 +63,6 @@ jobs:
       - name: Build
         working-directory: extension
         shell: bash
-        env:
-          BREAKPAD_SYMBOL_SERVER: ${{ secrets.BREAKPAD_SYMBOL_SERVER }}
         run: |
           mkdir build && cd build
           python ../configure.py --enable-optimize --targets=${{ matrix.target-archs }} --sdks=${{ matrix.sdks }}
@@ -107,10 +105,3 @@ jobs:
             cd -
           fi
 
-      - name: Release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: '*.tar.gz'
-          tag: ${{ github.ref }}
-          file_glob: true
